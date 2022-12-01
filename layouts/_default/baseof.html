@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+  <head>
+    <link href="{{ relURL "css/style.css"}}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{ template "_internal/opengraph.html" . }}
+    {{ template "_internal/twitter_cards.html" . }}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
+  </head>
+  <body class="font-mplus1c bg-body text-text">
+    <header class="py-6 bg-gray-800 text-white text-xl font-bold">
+      <h1 class="pl-10"><a href="{{ relURL "./" }}">{{ .Site.Title }}</a></h1>
+    </header>
+    <div class="container mx-auto px-16 my-32">
+    {{- block "main" . }}{{- end }}
+    </div>
+  </body>
+</html>

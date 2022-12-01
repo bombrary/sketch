@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.highlight pre {
+  @apply py-2 px-4 mx-auto my-2 rounded-md overflow-scroll;
+}
