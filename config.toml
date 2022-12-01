@@ -1,4 +1,3 @@
 baseURL = 'http://example.org/sketch/'
 languageCode = 'ja-jp'
 title = 'Chanomic Sketch'
-publishDir="docs"
