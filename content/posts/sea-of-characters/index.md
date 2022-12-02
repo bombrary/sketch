@@ -1,6 +1,6 @@
 ---
 title: "Sea of Characters"
-date: 2022-12-01T20:05:59+09:00
+date: 2022-12-02T11:35:00+09:00
 tags: ["p5js"]
 description: Sea of Characters
 ---
