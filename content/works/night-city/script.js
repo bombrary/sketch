@@ -1,4 +1,3 @@
-// const cols = ['#022C43', '#053F5E', '#115173', '#FFD700'];
 const cols = ['#001F3F', '#083358', '#0D63A5', '#FFD717'];
 const colsRedundant = [...new Array(8).fill(cols[0]),
                        ...new Array(4).fill(cols[1]),
@@ -8,8 +7,6 @@ const dt = 1;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  step = 0;
-  colBg = color('#001F3F');
   background(cols[0]);
 
   noStroke();
@@ -24,20 +21,13 @@ function setup() {
 
 }
 
-const sigmoid = (x) => {
-  return 1 / (1 + exp(2*x));
-}
-
-
 const band = (pos, vec, w) => {
-  norm = p5.Vector.rotate(vec, HALF_PI).normalize();
+  const norm = p5.Vector.rotate(vec, HALF_PI).normalize();
   const c1 = pickUpColor();
   const c2 = pickUpColor();
   
-  strokeWeight(1);
   const N = Math.floor(w / dt);
   for (let i = 0; i < N; i++) {
-    const c = i * dt;
     const v = p5.Vector.mult(norm, i);
     const p = p5.Vector.add(v, pos);
     stroke(gradientNoisy(c1, c2, i / N));
