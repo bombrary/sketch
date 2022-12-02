@@ -1,4 +1,3 @@
-let width, height;
 let entities;
 const [fontSizeMin, fontSizeMax] = [0, 100];
 const [rMin, rMax] = [0, 100];
@@ -9,9 +8,7 @@ const [circleDyMin, circleDyMax] = [-1, 0];
 
 
 function setup() {
-    width = windowWidth;
-    height = windowHeight;
-    createCanvas(width, height);
+    createCanvas(windowWidth, windowHeight);
     smooth();
 
     entities = [...createTexts(20), ...createCircles(20)];
