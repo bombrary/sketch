@@ -1,4 +1,3 @@
-let width, height;
 let r = 800;
 const dr = 100;
 const barMax = 100;
@@ -7,11 +6,9 @@ let sep;
 
 
 function setup() {
-  width = windowWidth;
-  height = windowHeight;
   sep = TWO_PI / N;
 
-  createCanvas(width, height);
+  createCanvas(windowWidth, windowHeight);
   background('#005b98');
 }
 
