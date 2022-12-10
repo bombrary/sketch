@@ -4,7 +4,7 @@ let textNumMin, textNumMax;
 let textSizeMin, textSizeMax;
 
 function setup() {
-  cvs = createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight);
 
   palette = ['rgb(238,217,64)', 'rgb(229,100,37)', 'rgb(241,183,209)', 'rgb(163,221,231)', 'rgb(167, 202, 102)'].map((c) => color(c));
 
