@@ -1,4 +1,3 @@
-const depthMax = 10;
 let palette;
 
 function setup() {
