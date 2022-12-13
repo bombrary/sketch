@@ -1,0 +1,160 @@
+<!doctype html><html lang=ja-jp><head><link href=/sketch/css/style.css rel=stylesheet><link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin=anonymous referrerpolicy=no-referrer><meta property="og:title" content="A Blue Light"><meta property="og:description" content="A Blue Light"><meta property="og:type" content="article"><meta property="og:url" content="https://bombrary.github.io/sketch/posts/a-blue-light/"><meta property="og:image" content="https://bombrary.github.io/sketch/posts/a-blue-light/cover.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-12-13T12:52:14+09:00"><meta property="article:modified_time" content="2022-12-13T12:52:14+09:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://bombrary.github.io/sketch/posts/a-blue-light/cover.png"><meta name=twitter:title content="A Blue Light"><meta name=twitter:description content="A Blue Light"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>A Blue Light | Chanomic Sketch</title></head><body class="font-mplus1c bg-body text-text"><header class="py-6 bg-gray-800 text-white text-xl font-bold"><h1 class=pl-10><a href=/sketch/>Chanomic Sketch</a></h1></header><div class="container mx-auto px-16 my-32"><article><header><h1 class="text-3xl font-bold">A Blue Light</h1><div class="flex mt-2"><p class="text-gray-600 px-2 py-1 text-sm"><time datetime=2022-12-13T12:52:14+09:00>2022-12-13</time></p><div class=ml-4><a href=/sketch/tags/p5js><span class="bg-gray-400 px-2 py-1 text-white text-sm font-bold">p5js</span></a></div></div></header><div class=mt-8><div class=relative><iframe class="w-full aspect-[16/9] border-none" scrolling=no src=/sketch/works/a-blue-light/></iframe>
+<a class="absolute bottom-2 right-2 px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-400 duration-300 transition text-white font-bold" href=/sketch/works/a-blue-light/>別ページで閲覧</a></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>yellowPalette</span>, <span style=color:#a6e22e>bluePalette</span>, <span style=color:#a6e22e>bluePaletteRGB</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>grainImg</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>socket</span>, <span style=color:#a6e22e>light</span>, <span style=color:#a6e22e>code</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>sizeScale</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>setup</span>() {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>createCanvas</span>(<span style=color:#a6e22e>windowWidth</span>, <span style=color:#a6e22e>windowHeight</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>yellowPalette</span> <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;rgb(248,177,47)&#39;</span>, <span style=color:#e6db74>&#39;rgb(250,230,144)&#39;</span>, <span style=color:#e6db74>&#39;rgb(247,250,232)&#39;</span>].<span style=color:#a6e22e>map</span>((<span style=color:#a6e22e>c</span>) =&gt; <span style=color:#a6e22e>color</span>(<span style=color:#a6e22e>c</span>));
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>bluePalette</span> <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;rgb(33,26,58)&#39;</span>, <span style=color:#e6db74>&#39;rgb(34,69,142)&#39;</span>, <span style=color:#e6db74>&#39;rgb(99,190,237)&#39;</span>].<span style=color:#a6e22e>map</span>((<span style=color:#a6e22e>c</span>) =&gt; <span style=color:#a6e22e>color</span>(<span style=color:#a6e22e>c</span>));
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>bluePaletteRGB</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>bluePalette</span>.<span style=color:#a6e22e>map</span>((<span style=color:#a6e22e>c</span>) =&gt; [<span style=color:#a6e22e>red</span>(<span style=color:#a6e22e>c</span>), <span style=color:#a6e22e>green</span>(<span style=color:#a6e22e>c</span>), <span style=color:#a6e22e>blue</span>(<span style=color:#a6e22e>c</span>)]);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>grainImg</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>generateGrainImg</span>();
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sizeScale</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>min</span>(<span style=color:#a6e22e>width</span>, <span style=color:#a6e22e>height</span>)<span style=color:#f92672>/</span><span style=color:#ae81ff>150</span>;
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>socket</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Socket</span>(<span style=color:#a6e22e>sizeScale</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>light</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Light</span>(<span style=color:#a6e22e>sizeScale</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>code</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Code</span>(<span style=color:#ae81ff>5</span><span style=color:#f92672>*</span><span style=color:#a6e22e>sizeScale</span>, <span style=color:#ae81ff>50</span><span style=color:#f92672>*</span><span style=color:#a6e22e>sizeScale</span>, <span style=color:#ae81ff>5</span><span style=color:#f92672>*</span><span style=color:#a6e22e>sizeScale</span>);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>draw</span>() {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>background</span>(<span style=color:#a6e22e>bluePalette</span>[<span style=color:#ae81ff>0</span>]);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>push</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>translate</span>(<span style=color:#a6e22e>width</span><span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>push</span>();
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>translate</span>(<span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>code</span>.<span style=color:#a6e22e>h</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>socket</span>.<span style=color:#a6e22e>h</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>0.15</span><span style=color:#f92672>*</span><span style=color:#a6e22e>sizeScale</span>);
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>light</span>.<span style=color:#a6e22e>draw</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>push</span>();
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>translate</span>(<span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>code</span>.<span style=color:#a6e22e>h</span>);
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>socket</span>.<span style=color:#a6e22e>draw</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>push</span>();
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>translate</span>(<span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>code</span>.<span style=color:#a6e22e>h</span><span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>);
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>code</span>.<span style=color:#a6e22e>draw</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>image</span>(<span style=color:#a6e22e>grainImg</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>generateGrainImg</span> <span style=color:#f92672>=</span> () =&gt; {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>img</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>createGraphics</span>(<span style=color:#a6e22e>width</span>, <span style=color:#a6e22e>height</span>);
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>d</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>img</span>.<span style=color:#a6e22e>pixelDensity</span>();
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>img</span>.<span style=color:#a6e22e>loadPixels</span>();
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>x</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>x</span> <span style=color:#f92672>&lt;</span> <span style=color:#a6e22e>img</span>.<span style=color:#a6e22e>width</span>; <span style=color:#a6e22e>x</span><span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>y</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>y</span> <span style=color:#f92672>&lt;</span> <span style=color:#a6e22e>img</span>.<span style=color:#a6e22e>height</span>; <span style=color:#a6e22e>y</span><span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> <span style=color:#f92672>&lt;</span> <span style=color:#a6e22e>d</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>j</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>j</span> <span style=color:#f92672>&lt;</span> <span style=color:#a6e22e>d</span>; <span style=color:#a6e22e>j</span><span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>          <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>idx</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>4</span> <span style=color:#f92672>*</span> ((<span style=color:#a6e22e>y</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>d</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>j</span>) <span style=color:#f92672>*</span> <span style=color:#a6e22e>img</span>.<span style=color:#a6e22e>width</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>d</span> <span style=color:#f92672>+</span> (<span style=color:#a6e22e>x</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>d</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>i</span>));
+</span></span><span style=display:flex><span>          [<span style=color:#a6e22e>img</span>.<span style=color:#a6e22e>pixels</span>[<span style=color:#a6e22e>idx</span>], <span style=color:#a6e22e>img</span>.<span style=color:#a6e22e>pixels</span>[<span style=color:#a6e22e>idx</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>], <span style=color:#a6e22e>img</span>.<span style=color:#a6e22e>pixels</span>[<span style=color:#a6e22e>idx</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span>]] <span style=color:#f92672>=</span> <span style=color:#a6e22e>random</span>(<span style=color:#a6e22e>bluePaletteRGB</span>);
+</span></span><span style=display:flex><span>          <span style=color:#a6e22e>img</span>.<span style=color:#a6e22e>pixels</span>[<span style=color:#a6e22e>idx</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>3</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>64</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>      }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>img</span>.<span style=color:#a6e22e>updatePixels</span>();
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>img</span>;
+</span></span><span style=display:flex><span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Light</span> {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>constructor</span>(<span style=color:#a6e22e>size</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>w</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>35.454308</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>h</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>47.990799</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>size</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>size</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>draw</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>t</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>sin</span>(<span style=color:#a6e22e>frameCount</span><span style=color:#f92672>/</span><span style=color:#ae81ff>50</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>push</span>();
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>scale</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>size</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>0.9</span>);
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>noStroke</span>();
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>fill</span>(<span style=color:#a6e22e>yellowPalette</span>[<span style=color:#ae81ff>1</span>]);
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>drawingContext</span>.<span style=color:#a6e22e>shadowColor</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>bluePalette</span>[<span style=color:#ae81ff>2</span>];
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>drawingContext</span>.<span style=color:#a6e22e>shadowBlur</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>map</span>(<span style=color:#a6e22e>t</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>500</span>);
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>drawShape</span>();
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>drawingContext</span>.<span style=color:#a6e22e>shadowBlur</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>map</span>(<span style=color:#a6e22e>t</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>100</span>);
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>drawShape</span>();
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>drawingContext</span>.<span style=color:#a6e22e>shadowBlur</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>map</span>(<span style=color:#a6e22e>t</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>50</span>);
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>drawShape</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>push</span>();
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>scale</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>size</span>);
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>noStroke</span>();
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>fill</span>(<span style=color:#a6e22e>map</span>(<span style=color:#a6e22e>t</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>128</span>, <span style=color:#ae81ff>255</span>));
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>light</span>.<span style=color:#a6e22e>drawShape</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>drawShape</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>push</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>translate</span>(<span style=color:#f92672>-</span><span style=color:#ae81ff>8.7090399</span>,<span style=color:#f92672>-</span><span style=color:#ae81ff>41.749297</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>translate</span>(<span style=color:#f92672>-</span><span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>w</span><span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>beginShape</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>vertex</span>(<span style=color:#ae81ff>41.018672</span>, <span style=color:#ae81ff>81.646468</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>bezierVertex</span>(<span style=color:#ae81ff>45.065034</span>,<span style=color:#ae81ff>75.809971</span>,<span style=color:#ae81ff>44.871322</span>,<span style=color:#ae81ff>68.063488</span>,<span style=color:#ae81ff>41.420332</span>,<span style=color:#ae81ff>60.759868</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>bezierVertex</span>(<span style=color:#ae81ff>37.687812</span>,<span style=color:#ae81ff>53.210947</span>,<span style=color:#ae81ff>35.972102</span>,<span style=color:#ae81ff>50.862607</span>,<span style=color:#ae81ff>35.663122</span>,<span style=color:#ae81ff>43.756027</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>bezierVertex</span>(<span style=color:#ae81ff>35.749622</span>,<span style=color:#ae81ff>42.438297</span>,<span style=color:#ae81ff>34.978848</span>,<span style=color:#ae81ff>41.881587</span>,<span style=color:#ae81ff>34.190352</span>,<span style=color:#ae81ff>41.881587</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>vertex</span>(<span style=color:#ae81ff>18.682027</span>, <span style=color:#ae81ff>41.881587</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>bezierVertex</span>(<span style=color:#ae81ff>17.893530</span>,<span style=color:#ae81ff>41.881587</span>,<span style=color:#ae81ff>17.122754</span>,<span style=color:#ae81ff>42.438297</span>,<span style=color:#ae81ff>17.209254</span>,<span style=color:#ae81ff>43.756027</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>bezierVertex</span>(<span style=color:#ae81ff>16.991822</span>,<span style=color:#ae81ff>51.857364</span>,<span style=color:#ae81ff>15.184566</span>,<span style=color:#ae81ff>53.210947</span>,<span style=color:#ae81ff>11.452049</span>,<span style=color:#ae81ff>60.759868</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>bezierVertex</span>(<span style=color:#ae81ff>8.001060</span>,<span style=color:#ae81ff>68.063488</span>,<span style=color:#ae81ff>7.807357</span>,<span style=color:#ae81ff>75.809971</span>,<span style=color:#ae81ff>11.853714</span>,<span style=color:#ae81ff>81.646468</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>bezierVertex</span>(<span style=color:#ae81ff>15.900071</span>,<span style=color:#ae81ff>87.482965</span>,<span style=color:#ae81ff>20.822152</span>,<span style=color:#ae81ff>89.652898</span>,<span style=color:#ae81ff>26.436192</span>,<span style=color:#ae81ff>89.607098</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>bezierVertex</span>(<span style=color:#ae81ff>32.050222</span>,<span style=color:#ae81ff>89.652898</span>,<span style=color:#ae81ff>36.972310</span>,<span style=color:#ae81ff>87.482965</span>,<span style=color:#ae81ff>41.018672</span>,<span style=color:#ae81ff>81.646468</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>endShape</span>(<span style=color:#a6e22e>CLOSE</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Socket</span> {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>constructor</span>(<span style=color:#a6e22e>size</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>w</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>18.888741</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>size</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>h</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>30.657272</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>size</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>size</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>size</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>draw</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>push</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>noStroke</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fill</span>(<span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>translate</span>(<span style=color:#f92672>-</span><span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>w</span><span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>scale</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>size</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>drawShape</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>drawShape</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>push</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>translate</span>(<span style=color:#f92672>-</span><span style=color:#ae81ff>16.991822</span>,<span style=color:#f92672>-</span><span style=color:#ae81ff>7.8480604</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>beginShape</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>vertex</span>(<span style=color:#ae81ff>34.190354</span>, <span style=color:#ae81ff>38.373042</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>bezierVertex</span>(<span style=color:#ae81ff>34.986014</span>,<span style=color:#ae81ff>37.887972</span>,<span style=color:#ae81ff>35.542144</span>,<span style=color:#ae81ff>37.307092</span>,<span style=color:#ae81ff>35.529234</span>,<span style=color:#ae81ff>36.498602</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>vertex</span>(<span style=color:#ae81ff>35.748264</span>,<span style=color:#ae81ff>13.068112</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>bezierVertex</span>(<span style=color:#ae81ff>35.708064</span>,<span style=color:#ae81ff>9.911582</span>,<span style=color:#ae81ff>31.664504</span>,<span style=color:#ae81ff>7.980352</span>,<span style=color:#ae81ff>26.436194</span>,<span style=color:#ae81ff>7.980352</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>bezierVertex</span>(<span style=color:#ae81ff>21.207879</span>,<span style=color:#ae81ff>7.980352</span>,<span style=color:#ae81ff>17.164321</span>,<span style=color:#ae81ff>9.911582</span>,<span style=color:#ae81ff>17.124121</span>,<span style=color:#ae81ff>13.068112</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>vertex</span>(<span style=color:#ae81ff>17.343145</span>,<span style=color:#ae81ff>36.498602</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>bezierVertex</span>(<span style=color:#ae81ff>17.330235</span>,<span style=color:#ae81ff>37.307092</span>,<span style=color:#ae81ff>17.886364</span>,<span style=color:#ae81ff>37.887972</span>,<span style=color:#ae81ff>18.682029</span>,<span style=color:#ae81ff>38.373042</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>endShape</span>(<span style=color:#a6e22e>CLOSE</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Code</span> {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>constructor</span>(<span style=color:#a6e22e>w</span>, <span style=color:#a6e22e>h</span>, <span style=color:#a6e22e>pady</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>w</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>w</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>h</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>h</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>pady</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>pady</span>;
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>draw</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>push</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>noStroke</span>();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fill</span>(<span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>rectMode</span>(<span style=color:#a6e22e>CENTER</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>rect</span>(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>w</span>, <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>h</span> <span style=color:#f92672>+</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>pady</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div></div></article></div></body></html>
