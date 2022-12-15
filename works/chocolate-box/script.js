@@ -2,10 +2,8 @@ let palette;
 const frameMax = 200;
 let frame = 0;
 
-
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  //palette = ['#453C67', '#6D67E4', '#46C2CB', '#F2F7A1'].map((c) => color(c));
   palette = ['#A77979', '#553939', '#704F4F'].map((c) => color(c));
   background('#472D2D');
 }
