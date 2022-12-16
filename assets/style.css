@@ -6,7 +6,7 @@
   @apply py-2 px-4 mx-auto my-2 rounded-md overflow-scroll;
 }
 
-article a {
+article p a {
   @apply text-blue-600 hover:text-blue-400;
 }
 
