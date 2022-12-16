@@ -835,17 +835,17 @@ video {
   padding-right: 1rem;
 }
 
-article p a {
+.markdown-container p a {
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
-article p a:hover {
+.markdown-container p a:hover {
   --tw-text-opacity: 1;
   color: rgb(96 165 250 / var(--tw-text-opacity));
 }
 
-p {
+.markdown-container p {
   margin-top: 1rem;
 }
 
