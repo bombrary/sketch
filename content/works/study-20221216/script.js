@@ -1,15 +1,40 @@
 const depthMax = 5;
+let curblendMode;
+let palette;
+let sel;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  blendMode(BLEND);
   
-  const palette = ['#EB455F', '#4B56D2', '#FED049'].map((c) => {
+  palette = ['#EB455F', '#4B56D2', '#FED049'].map((c) => {
     const col = color(c);
     col.setAlpha(64);
     return col;
   });
 
+  sel = createSelect();
+  sel.position(10, 10);
+  sel.option('BLEND');
+  sel.option('SCREEN');
+  sel.option('SOFT_LIGHT');
+  sel.changed(() => {
+    const val = sel.value();
+    if (val === 'BLEND') curBlendMode = BLEND;
+    else if (val === 'SCREEN') curBlendMode = SCREEN;
+    else if (val === 'SOFT_LIGHT') curBlendMode = SOFT_LIGHT;
+    else curBlendMode = BLEND;
+    redraw();
+  });
+
+  curBlendMode = BLEND;
+  redraw();
+  noLoop();
+}
+
+function draw() {
+  clear();
+
+  blendMode(curBlendMode);
 
   noStroke();
 
