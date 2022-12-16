@@ -6,11 +6,11 @@
   @apply py-2 px-4 mx-auto my-2 rounded-md overflow-scroll;
 }
 
-article p a {
+.markdown-container p a {
   @apply text-blue-600 hover:text-blue-400;
 }
 
-p {
+.markdown-container p {
   @apply mt-4;
 }
 
