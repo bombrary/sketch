@@ -7,4 +7,6 @@ description: Starfish
 
 {{< p5container "works/starfish/" >}}
 
+[Context Free](https://contextfreeart.org/index.html)とか[Structure Synth](https://structuresynth.sourceforge.net)のような、再帰的な構造の生成に特化したソフトウェアなら、もっと簡潔に書けるはず。
+
 {{< code-external "works/starfish/script.js" "js" >}}
