@@ -48,24 +48,24 @@ const drawShapesAt = (x, y, sc, cols, angles) => {
 const drawShape = (rot, cols) => {
   push();
   rotate(rot);
-  rec(0, 0, 0, 1, 1, cols, () => {
+  rec(0, 0, 0, 1, cols, () => {
     rect(0, 0, rectLen, rectLen);
   }, 0);
   pop();
 }
 
 
-const rec = (x, y, r, sx, sy, cols, drawFunc, depth) => {
+const rec = (x, y, r, sc, cols, drawFunc, depth) => {
   if (depth < depthMax) {
     const t = depth / depthMax;
 
     translate(x, y);
     rotate(r);
-    scale(sx, sy);
+    scale(sc);
 
     fill(lerpColor(cols[0], cols[1], t));
     drawFunc();
 
-    rec(rectLen + rectSep, 0, random(-PI/6, PI/6), 0.9, 0.9, cols, drawFunc, depth + 1);
+    rec(rectLen + rectSep, 0, random(-PI/6, PI/6), 0.9, cols, drawFunc, depth + 1);
   }
 };
