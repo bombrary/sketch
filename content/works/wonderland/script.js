@@ -35,7 +35,6 @@ const drawCircle = (rotNum) => {
     const eang = (i + 1) / rotNum * TWO_PI/4 - TWO_PI/4;
     const col = color(random(0, 360), 50, 100, 1);
     stroke(col);
-    strokeCap(SQUARE);
 
     const mang = (i + 0.5) / rotNum * TWO_PI/4 - TWO_PI/4;
     const x = R * cos(sang);
