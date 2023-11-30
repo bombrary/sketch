@@ -2,6 +2,7 @@ let palette = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  background(255);
 
   palette = ['#F4EAD5', '#CCD6A6', '#FF9E9E'].map((c) => color(c));
 }
