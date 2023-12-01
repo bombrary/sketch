@@ -1,6 +1,6 @@
 ---
 title: "Rotation pattern"
-date: 2023-11-25T14:51:17+09:00
+date: 2023-12-02T06:30:00+09:00
 tags: ["p5js"]
 description: "Rotation Pattern"
 ---
