@@ -10,8 +10,20 @@
   @apply text-blue-600 hover:text-blue-400;
 }
 
+.markdown-container li a {
+  @apply text-blue-600 hover:text-blue-400;
+}
+
 .markdown-container p {
   @apply mt-4;
+}
+
+.markdown-container ul {
+  @apply list-inside;
+}
+
+.markdown-container li {
+  @apply list-disc;
 }
 
 p code {
