@@ -1,6 +1,6 @@
 ---
 title: "Asymmetric trees"
-date: 2023-12-18T06:00:00+09:00
+date: 2023-12-19T06:00:00+09:00
 tags: ["p5js"]
 description: "Asymmetric trees"
 ---
