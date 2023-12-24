@@ -45,6 +45,20 @@ function draw() {
   }
   pop();
 
+  push();
+  {
+    const img = createGraphics(width, height);
+    img.background(255, 255, 128, 64);
+    img.erase();
+    img.noStroke();
+    img.fill(0);
+    img.translate(width/2, height/2)
+    img.ellipse(0, 0, width);
+    img.filter(BLUR, 10);
+    image(img, 0, 0);
+  }
+  pop();
+
   noLoop();
 }
 
