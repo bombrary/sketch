@@ -1,6 +1,6 @@
 ---
 title: "Toy's dream"
-date: 2023-12-26T00:00:00+09:00
+date: 2023-12-26T06:00:00+09:00
 tags: ["p5js"]
 description: "Toy's dream"
 ---
