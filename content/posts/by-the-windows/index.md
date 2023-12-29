@@ -5,6 +5,6 @@ tags: ["p5js"]
 description: "Sandbox"
 ---
 
-{{< p5container "works/sandbox/" >}}
+{{< p5container "works/by-the-windows/" >}}
 
-{{< code-external "works/sandbox/script.js" "js" >}}
+{{< code-external "works/by-the-windows/script.js" "js" >}}
