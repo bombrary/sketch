@@ -1,7 +1,8 @@
 const yellowPalette = ['#FFDD67', '#FFCD38', '#FEFEA4'];
 const bluePalette = ['#005b98', '#537188', '#C2DEDC'];
 let R;
-let Rs = [];
+let Rs;
+let fragmentsCircles;
 let idxStep0;
 let imgs;
 let step;
@@ -17,48 +18,81 @@ class Fragment {
   }
 
   draw(img) {
-    push();
+    img.push();
     {
       img.noStroke();
-      if (this.N === Infinity) {
-        img.ellipse(0, 0, 2*this.R, 2*this.R);
-      } else {
-        img.beginShape();
-        for (let i = 0; i < this.N; i++) {
-          const th = i / this.N * TWO_PI;
-          const x = this.R * cos(th + this.phi);
-          const y = this.R * sin(th + this.phi);
-          img.vertex(x, y);
-        }
-        img.endShape(CLOSE);
-      }
-    }
-    pop();
-  }
 
-  mask(img, globalCompositeOperation) {
-    img.drawingContext.globalCompositeOperation = globalCompositeOperation;
-    const dth = 0.005;
-    img.arc(0, 0, 2*this.R, 2*this.R, this.th1 - dth, this.th2 + dth);
+      img.beginClip();
+      drawPolygon(img, this.R, this.N, this.phi);
+      img.endClip();
+
+      img.arc(0, 0, 2*this.R, 2*this.R, this.th1, this.th2);
+    }
+    img.pop();
   }
 }
+
+const drawPolygon = (img, R, N, phi) => {
+  if (N === Infinity) {
+    img.ellipse(0, 0, 2*R, 2*R);
+  } else {
+    img.beginShape();
+    for (let i = 0; i < N; i++) {
+      const th = i / N * TWO_PI;
+      const x = R * cos(th + phi);
+      const y = R * sin(th + phi);
+      img.vertex(x, y);
+    }
+    img.endShape(CLOSE);
+  }
+};
+
+class FragmentsCircle {
+  constructor(R, palette) {
+    const N_phi = [[Infinity, random(0, TWO_PI)],
+                   [3, random(0, TWO_PI)],
+                   [4, random(0, TWO_PI)],
+                   [5, random(0, TWO_PI)]];
+    const M = 50;
+    const angles = Array.from({ length: M }).map(() => random(0, TWO_PI));
+    angles.sort((a, b) => a - b);
+
+    this.R = R;
+    this.palette = palette;
+    this.fragments = pairsLoop(angles).map(([th1, th2]) => {
+      const [N, phi] = random(N_phi);
+      return new Fragment(R, N, phi, th1, th2);
+    });
+  }
+
+  draw(img) {
+    img.push()
+    {
+      this.fragments.forEach((fragment) => {
+        const col = random(this.palette);
+        img.fill(col);
+        fragment.draw(img)
+      });
+    }
+    img.pop();
+  }
+};
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   R = max(width/2, height/2);
-  Rs = [R * 3 / 2, R, R/2, R/3, R/4, R/5, R/6];
+  Rs = [R/6, R/5, R/4, R/3, R/2, R, R * 3/2];
+  Rs.reverse();
   idx = 0;
-  imgs = Rs.map((r, i) => {
-    const col = (() => {
+  step = 0;
+  idxStep0 = 0;
+  fragmentsCircles = Rs.map((R, i) => {
+    const palette = (() => {
       if (i % 2 === 0) return yellowPalette;
       else return bluePalette;
     })();
-
-    return createFragmentsImg(r, col);
+    return new FragmentsCircle(R, palette);
   });
-  step = 0;
-  idxStep0 = 0;
-
   grain = generateGrainImg(-255, 255);
 }
 
@@ -88,18 +122,22 @@ function draw() {
 };
 
 const drawStep0 = (i) => {
-  const col = (() => {
-    if (i % 2 === 0) return yellowPalette;
-    else return bluePalette;
-  })();
+  const fragmentsCircle = fragmentsCircles[i];
+  const img = createGraphics(2*fragmentsCircle.R, 2*fragmentsCircle.R);
 
-  const r = Rs[i];
-  const img =  createFragmentsImg(r, col);
-  const baseImg = createGraphics(width, height);
-  baseImg.image(img, (width - img.width)/2, (height - img.height)/2);
-  baseImg.filter(BLUR, i/3);
+  img.push();
+  img.translate(img.width/2, img.height/2);
+  fragmentsCircle.draw(img);
+  img.pop();
 
-  image(baseImg, 0, 0);
+  push();
+  {
+    const baseImg = createGraphics(width, height);
+    baseImg.image(img, (width - img.width)/2, (height - img.height)/2);
+    baseImg.filter(BLUR, i/3);
+    image(baseImg, 0, 0);
+  }
+  pop();
 };
 
 
@@ -114,32 +152,6 @@ const drawStep1 = () => {
   image(img, 0, 0);
 }
 
-const createFragmentsImg = (R, palette) => {
-  const N_phi = [[Infinity, random(0, TWO_PI)],
-                 [3, random(0, TWO_PI)],
-                 [4, random(0, TWO_PI)],
-                 [5, random(0, TWO_PI)]];
-  const angles = Array.from({ length: 50 }).map(() => random(0, TWO_PI));
-  angles.sort((a, b) => a - b);
-
-  const fragments = pairsLoop(angles).map(([th1, th2]) => {
-    const [N, phi] = random(N_phi);
-    return new Fragment(R, N, phi, th1, th2);
-  });
-
-  const mainImg = createGraphics(2*R, 2*R);
-  mainImg.imageMode(CENTER);
-  for (const fragment of fragments) {
-    const img = createGraphics(2*fragment.R, 2*fragment.R)
-    const col = random(palette);
-    img.fill(col);
-    img.translate(fragment.R, fragment.R);
-    fragment.draw(img)
-    fragment.mask(img, 'destination-in');
-    mainImg.image(img, R, R);
-  }
-  return mainImg;
-};
 
 const pairsLoop = (xs) => {
   const res = [];
