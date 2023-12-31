@@ -147,8 +147,7 @@ const drawStep1 = () => {
   img.fill(0);
   img.noStroke();
   img.translate(width/2, height/4 * 3);
-  img.scale(s, s);
-  drawHand(img)
+  drawHand(img, s)
   image(img, 0, 0);
 }
 
@@ -166,58 +165,59 @@ const pairsLoop = (xs) => {
 // Inkscapeで手の画像のパスをなぞってsvgで保存し、
 // 以下のsvg2p5で変換
 //   https://svg2p5.com/
-const drawHand = (img) => {
+const drawHand = (img, s) => {
   img.push();
   {
-    img.translate(-110, -163);
+    img.scale(s, s);
     img.beginShape();
-    img.vertex(183.68561,240.02324);
-    img.vertex(137.6438,176.72871);
-    img.vertex(138.17835,161.76162);
-    img.vertex(135.50565,148.13087);
-    img.vertex(140.04923,133.69832);
-    img.vertex(139.51469,125.68023);
-    img.vertex(137.6438,124.61113);
-    img.vertex(133.10022,127.28383);
-    img.vertex(130.6948,133.69832);
-    img.vertex(126.68576,138.2417);
-    img.vertex(124.81487,132.62924);
-    img.vertex(125.61668,121.93846);
-    img.vertex(121.8749,110.71314);
-    img.vertex(118.93494,107.5059);
-    img.vertex(117.59859,107.77317);
-    img.vertex(114.39136,110.44587);
-    img.vertex(115.46043,120.06757);
-    img.vertex(113.58955,129.68927);
-    img.vertex(111.98593,128.6202);
-    img.vertex(111.71866,114.45491);
-    img.vertex(109.84778,108.04044);
-    img.vertex(108.24416,102.16051);
-    img.vertex(106.106,100.28963);
-    img.vertex(103.70058,100.28963);
-    img.vertex(101.02788,104.0314);
-    img.vertex(99.691533,108.3078);
-    img.vertex(99.156992,128.8874);
-    img.vertex(95.682489,132.62924);
-    img.vertex(89.802561,117.12761);
-    img.vertex(88.733483,112.58402);
-    img.vertex(85.526247,108.84225);
-    img.vertex(83.922631,108.84225);
-    img.vertex(79.913587,111.78222);
-    img.vertex(79.646319,119.26576);
-    img.vertex(82.319012,134.50013);
-    img.vertex(82.987186,155.01306);
-    img.vertex(75.370007,152.34036);
-    img.vertex(68.688267,153.47626);
-    img.vertex(67.61919,156.61667);
-    img.vertex(70.960058,159.89073);
-    img.vertex(73.766388,160.69254);
-    img.vertex(77.240894,167.10701);
-    img.vertex(86.328056,182.34137);
-    img.vertex(97.820645,195.43758);
-    img.vertex(119.46948,253.43506);
-    img.vertex(126.15122,283.36925);
-    img.vertex(183.68561,283.57801);
+    img.vertex(73.686, 77.023);
+    img.vertex(27.644, 13.729);
+    img.vertex(28.178, -1.238);
+    img.vertex(25.506, -14.869);
+    img.vertex(30.049, -29.302);
+    img.vertex(29.515, -37.320);
+    img.vertex(27.644, -38.389);
+    img.vertex(23.100, -35.716);
+    img.vertex(20.695, -29.302);
+    img.vertex(16.686, -24.758);
+    img.vertex(14.815, -30.371);
+    img.vertex(15.617, -41.062);
+    img.vertex(11.875, -52.287);
+    img.vertex(8.935, -55.494);
+    img.vertex(7.599, -55.227);
+    img.vertex(4.391, -52.554);
+    img.vertex(5.460, -42.932);
+    img.vertex(3.590, -33.311);
+    img.vertex(1.986, -34.380);
+    img.vertex(1.719, -48.545);
+    img.vertex(-0.152, -54.960);
+    img.vertex(-1.756, -60.839);
+    img.vertex(-3.894, -62.710);
+    img.vertex(-6.299, -62.710);
+    img.vertex(-8.972, -58.969);
+    img.vertex(-10.308, -54.692);
+    img.vertex(-10.43, -34.113);
+    img.vertex(-14.318, -30.371);
+    img.vertex(-20.197, -45.872);
+    img.vertex(-21.267, -50.416);
+    img.vertex(-24.474, -54.158);
+    img.vertex(-26.077, -54.158);
+    img.vertex(-30.086, -51.218);
+    img.vertex(-30.354, -43.734);
+    img.vertex(-27.681, -28.500);
+    img.vertex(-27.013, -7.987);
+    img.vertex(-34.630, -10.660);
+    img.vertex(-41.312, -9.524);
+    img.vertex(-42.381, -6.383);
+    img.vertex(-39.040, -3.109);
+    img.vertex(-36.234, -2.307);
+    img.vertex(-32.759, 4.107);
+    img.vertex(-23.672, 19.341);
+    img.vertex(-12.179, 32.438);
+    img.vertex(9.469, 90.435);
+    img.vertex(16.151, 120.369);
+    img.vertex(73.686, 150.578);
+    img.vertex(73.686, 120.578);
     img.endShape(CLOSE);
   }
   img.pop();
