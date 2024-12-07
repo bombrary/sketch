@@ -75,40 +75,48 @@ function draw() {
     const x = random(0, width);
     const y = random(0, height);
 
-    const th = atan2(y, x);
-    if (HALF_PI + TH < th && th < HALF_PI) {
-      return;
-    }
-
     const d = dist(x, y, X, Y);
 
-    const diam = map(d, 0, R, circlesDiamMin, circlesDiamMax);
+    let diam = map(d, 0, R, circlesDiamMin, circlesDiamMax);
     const col = random(palette1);
 
-    fill(col);
-    col.setAlpha(255);
-    myCircle(x, y, diam);
+    const th = atan2(y, x);
+    if (HALF_PI + TH < th && th < HALF_PI) {
+      col.setAlpha(64);
+      diam *= 0.5;
+      fill(col);
+      myCircle(x, y, diam, [3, 4]);
+    } else {
+      col.setAlpha(255);
+      fill(col);
+      myCircle(x, y, diam, [3, 4, 5]);
+    }
+
   });
 
   noLoop();
 }
 
-function myCircle(x, y, diam) {
+function myCircle(x, y, diam, Ns) {
   const r = diam / 2.0;
-  const N = random([3, 4, 5]);
+  const N = random(Ns);
   push();
   translate(x, y);
 
   const type = random([0, 1, 2])
-  beginShape();
 
-  [...Array(N)].forEach((_, i) => {
-    const fact = random(0, 1);
-    const x1 = fact * r * cos(TWO_PI / N * i);
-    const y1 = fact * r * sin(TWO_PI / N * i);
-    vertex(x1, y1);
-  });
+  if (N > 0) {
+    beginShape();
+    [...Array(N)].forEach((_, i) => {
+      const fact = random(0, 1);
+      const x1 = fact * r * cos(TWO_PI / N * i);
+      const y1 = fact * r * sin(TWO_PI / N * i);
+      vertex(x1, y1);
+    });
+    endShape(CLOSE);
+  } else {
+    circle(0, 0, diam);
+  }
 
-  endShape(CLOSE);
   pop();
 }
