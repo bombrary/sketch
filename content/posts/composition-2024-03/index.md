@@ -5,6 +5,6 @@ tags: ["p5js"]
 description: "Composition 2024 (3)"
 ---
 
-{{< p5container "works/draft/" >}}
+{{< p5container "works/composition-2024-03/" >}}
 
-{{< code-external "works/draft/script.js" "js" >}}
+{{< code-external "works/composition-2024-03/script.js" "js" >}}
