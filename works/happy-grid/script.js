@@ -42,14 +42,14 @@ void main() {
 `
 
 const palette = [
-  "#001BB7",
-  "#0046FF",
-  "#FF8040",
-  "#E9E9E9",
-  "#FF0060",
-  "#F6FA70",
-  "#00DFA2",
-  "#0079FF"
+  "#5A9CB5",
+  "#FACE68",
+  "#FAAC68",
+  "#FA6868",
+  "#FF8A8A",
+  "#A3DC9A",
+  "#DEE791",
+  "#687FE5"
 ];
 
 let pg;
